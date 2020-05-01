@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="upload.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+       
+
+    <title>Upload Files</title>
+    
+    <style>
+    body {
+      background-color:cadetblue;
+    }
+    </style>
+
+
+  <body>
+      <div id="maintext" style="position:absolute; margin:auto; width:700px; height:500px; text-align:center; top: 25px; bottom: 0; left: 0; right: 0;">
+        <h1>Rowing Boat Classifier</h1>
+        <form id="upload-image" method="post" enctype="multipart/form-data">
+              <p><input type="file" accept="image/*" name="image" id="file" onchange="displayImage(event)" style="display:none;"></p>
+              <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+              <p><img id="output" width="350" height="300" style="display:none;"/></p>
+              <button id="upload-image-btn" type="button">Upload</button>
+          <p><p id="msg"></p><p>
+      
+        </form>
+      </div>
+
+      <script>
+      var displayImage = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        if (image.style.display="none") {
+          image.style.display = "inline"
+        }
+      };
+      </script>
+
+      <div id="bottom" style="position:fixed; bottom: 10px; right: 0; height: 60px; width:100px;">
+        <a href="https://github.com/michael-diggin/rowing_api">
+        <img alt="Github" height="50px" width="50px" src="Github-Mark-120px-plus.png"/>
+        </a>
+      </div>
+    
+  </body>
+</html>
