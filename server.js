@@ -5,6 +5,7 @@ var request = require('request');
 var fs = require('fs')
 var tmp = require('tmp');
 var tmpdir = tmp.dirSync();
+var parser = require('./parser.js')
 
 
 const app = express();
@@ -28,6 +29,7 @@ const upload = multer({
 const port = process.env.PORT;
 app.listen(port, () => console.log(`working on ${port}`));
 
+
 app.post(
     '/image-upload',
     upload.single('image'),
@@ -37,7 +39,6 @@ app.post(
             image: fs.createReadStream(req.file.path)
         };
         const apiKey = process.env.API_KEY;
-        const apiKeyName = process.env.API_KEY_NAME;
 
         console.log('making request');
 
@@ -47,12 +48,35 @@ app.post(
             formData: formData,
             headers: {
                 'accept': 'application/json',
+                'access_token': apiKey,
                 'Content-Type': 'multipart/form-data',
-                'access_token': '123abc'
             },
         },
         function (err, response, body) {
-            console.log(`${body}`)
-            res.json(JSON.parse(body));
+            if (err) {
+                return res.send(`Error: ${err}`);
+            }
+            else {
+                var htmlResp = parser.parseFunction(response, body);
+                res.json(htmlResp);
+            }
         })
 });
+
+var parseResponse = function(response, body) {
+    var json = JSON.parse(body);
+    if (response.statusCode == 200) {
+        var resp = {
+            statusCode: 200,
+            html: `Type: ${json.PredictedClass} (${Math.round(json.PredictedProb*100)/100}%)`,        
+        };
+        return resp;
+    }
+    else {
+        var resp = {
+            statusCode: response.statusCode,
+            html: `Error: ${json.detail}`,        
+        };
+        return resp;
+    }
+};

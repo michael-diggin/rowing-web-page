@@ -15,8 +15,7 @@ $(function() {
           processData: false,
           success: function(response) {
               $('#msg').html('');
-              $('#msg').append(`Type : ${response.PredictedClass}`);
-              $('#msg').append(` (${Math.round(response.PredictedProb*100)/100}%)<br/>`);             
+              $('#msg').append(`${response.html}<br/>`);         
           },
           error: function(response) {
               console.log('error')
