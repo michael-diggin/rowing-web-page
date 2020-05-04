@@ -27,7 +27,8 @@ const upload = multer({
 
 
 const port = process.env.PORT;
-app.listen(port, () => console.log(`working on ${port}`));
+const host = '0.0.0.0'
+app.listen(port, host, () => console.log(`working on ${host}:${port}`));
 
 
 app.post(
@@ -48,7 +49,7 @@ app.post(
             formData: formData,
             headers: {
                 'accept': 'application/json',
-                'access_token': apiKey,
+                'X-API-KEY': apiKey,
                 'Content-Type': 'multipart/form-data',
             },
         },

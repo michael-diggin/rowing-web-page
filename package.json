@@ -1,5 +1,5 @@
 {
-  "name": "rowing_fronted.js",
+  "name": "rowing-frontend.js",
   "version": "1.0.0",
   "description": "Web app for classifying rowing boat types",
   "main": "server.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/michael-diggin/rowing-web-page.git"
+    "url": "git+https://github.com/michael-diggin/rowingclassifier-frontend.git"
   },
   "author": "Michael Diggin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/michael-diggin/rowing-web-page/issues"
+    "url": "https://github.com/michael-diggin/rowingclassifier-frontend/issues"
   },
-  "homepage": "https://github.com/michael-diggin/rowing-web-page#readme",
+  "homepage": "https://github.com/michael-diggin/rowingclassifier-frontend#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
