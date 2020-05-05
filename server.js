@@ -9,7 +9,7 @@ var parser = require('./parser.js')
 
 
 const app = express();
-app.use(express.static(__dirname + '/web'));
+app.use(express.static(__dirname + '/web/'));
 
 
 const localStorage = multer.diskStorage({
@@ -33,6 +33,10 @@ const apiKey = process.env.API_KEY;
 
 app.listen(port, host, () => console.log(`working on ${host}:${port}`));
 
+
+app.get('/github-image', (req, res) => {
+    res.sendFile('./GitHub-Mark-120px-plus.png', { root: __dirname });
+});
 
 app.post(
     '/image-upload',
