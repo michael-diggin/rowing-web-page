@@ -26,8 +26,11 @@ const upload = multer({
 });
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 const host = '0.0.0.0'
+const api_url = process.env.API_URL || 'http://localhost/api/v1/predict';
+const apiKey = process.env.API_KEY;
+
 app.listen(port, host, () => console.log(`working on ${host}:${port}`));
 
 
@@ -38,14 +41,13 @@ app.post(
 
         const formData = {
             image: fs.createReadStream(req.file.path)
-        };
-        const apiKey = process.env.API_KEY;
+        };       
 
         console.log('making request');
 
         request({
             method: 'POST',
-            url: process.env.API_URL,
+            url: api_url,
             formData: formData,
             headers: {
                 'accept': 'application/json',
@@ -55,7 +57,7 @@ app.post(
         },
         function (err, response, body) {
             if (err) {
-                return res.send(`Error: ${err}`);
+                return res.send(`Error: ${err}, ${body}`);
             }
             else {
                 var htmlResp = parser.parseFunction(response, body);
@@ -63,21 +65,3 @@ app.post(
             }
         })
 });
-
-var parseResponse = function(response, body) {
-    var json = JSON.parse(body);
-    if (response.statusCode == 200) {
-        var resp = {
-            statusCode: 200,
-            html: `Type: ${json.PredictedClass} (${Math.round(json.PredictedProb*100)/100}%)`,        
-        };
-        return resp;
-    }
-    else {
-        var resp = {
-            statusCode: response.statusCode,
-            html: `Error: ${json.detail}`,        
-        };
-        return resp;
-    }
-};
